@@ -46,6 +46,7 @@ public class LoginExcelSteps {
         if(correct == "valid") {
             softAssertions.assertThat(correct).contains(loginPage.Title());
             softAssertions.assertAll();
+
         }
     }
 
