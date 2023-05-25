@@ -28,9 +28,8 @@ jobs:
       run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
     - name: Run tests
       run: mvn test
-    
-    - name: Step 3 - use the upload Artifact GitHub Action
-	    uses: actions/upload-artifact@v2
-    	with: 
-		      name: assets-for-download
-		      path: target/
+      
+    - uses: actions/upload-artifact@v3
+      with:
+          name: my-artifact
+          path: target/
