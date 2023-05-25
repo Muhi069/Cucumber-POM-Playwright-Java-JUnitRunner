@@ -15,7 +15,7 @@ public class RegisterUserPage {
         this.page = page;
     }
 
-    public String REG_URL= "https://localhost:44369/register?returnUrl=%2F";
+    public String REG_URL= "https://training.nop-station.com/register?returnUrl=%2F";
 
 
     //////////////*** Locators ***////////////
@@ -128,7 +128,7 @@ public class RegisterUserPage {
     }
 
     public void userOnRegPage() {
-        page.navigate("https://localhost:44369/register?returnUrl=%2F");
+        page.navigate("https://training.nop-station.com/register?returnUrl=%2F");
     }
 
     public String emptyConfPass() {
