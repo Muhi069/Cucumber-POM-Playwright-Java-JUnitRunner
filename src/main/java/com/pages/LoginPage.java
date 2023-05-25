@@ -59,7 +59,7 @@ public class LoginPage {
     }
 
     public void userOnLoginPage() {
-        page.navigate("https://localhost:44369/login?returnUrl=%2F");
+        page.navigate("https://training.nop-station.com/login?returnUrl=%2F");
     }
 
     public String noInputError() {
