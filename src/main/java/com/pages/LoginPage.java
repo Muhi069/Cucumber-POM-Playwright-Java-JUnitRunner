@@ -67,5 +67,14 @@ public class LoginPage {
     }
 
 
+    public void doLogin(String email, String password) {
+        page.fill("//input[@id='Email']", email);
+        page.fill("//input[@id='Password']", password);
+        page.click("//button[normalize-space()='Log in']");
+    }
+
+    public String Title() {
+        return page.title();
+    }
 
 }
