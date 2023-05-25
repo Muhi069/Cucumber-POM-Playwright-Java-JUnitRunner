@@ -67,6 +67,8 @@ public class LoginPage {
     }
 
 
+
+
     public void doLogin(String email, String password) {
         page.fill("//input[@id='Email']", email);
         page.fill("//input[@id='Password']", password);
