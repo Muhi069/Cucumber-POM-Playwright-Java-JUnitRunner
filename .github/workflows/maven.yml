@@ -9,9 +9,9 @@
 name: Maven Cucumber Playwright CI
 on:
   push:
-    branches: [ excel-file-read, excel-file-read ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ excel-file-read, excel-file-read ]
+    branches: [ "main" ]
 jobs:
   test:
     timeout-minutes: 60
