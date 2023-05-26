@@ -27,7 +27,15 @@ jobs:
     - name: Install Playwright
       run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
     - name: Run tests
-      run: mvn test
+      run: |
+        mvn test
+        mkdir staging && cp target/*.jar staging
+        
+    - name: Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: myartifact
+        path: staging
       
  
    
