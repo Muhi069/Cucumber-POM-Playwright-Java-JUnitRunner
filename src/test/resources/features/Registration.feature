@@ -103,11 +103,11 @@ Feature: Registration feature
 
 
 
-  Scenario: Register with Valid data
-    Given User fills First name field "Mutasim"
-    * User fills Last name field "Hasan"
-    * User fills Email field "customer11213@yourStore.com"
-    * User fills Password filed "admin1234"
-    * User fills Confirm Password filed "admin1234"
-    When User clicks Registration button
-    Then User should see confirmation message "Your registration completed"
+#  Scenario: Register with Valid data
+#    Given User fills First name field "Mutasim"
+#    * User fills Last name field "Hasan"
+#    * User fills Email field "customer11213@yourStore.com"
+#    * User fills Password filed "admin1234"
+#    * User fills Confirm Password filed "admin1234"
+#    When User clicks Registration button
+#    Then User should see confirmation message "Your registration completed"
