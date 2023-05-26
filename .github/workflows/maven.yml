@@ -37,6 +37,10 @@ jobs:
         name: myartifact
         path: staging
         
+    - name: notify-microsoft-teams
+      uses: Skitionek/notify-microsoft-teams@v1.0.4
+
+        
   success:
      name: One with everything
      runs-on: ubuntu-latest
