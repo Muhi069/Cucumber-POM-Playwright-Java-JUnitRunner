@@ -39,7 +39,7 @@ jobs:
         
   success:
      name: One with everything
-     runs-on: ubuntu-18.04
+     runs-on: ubuntu-latest
      steps:
       - uses: actions/checkout@master
       - name: Microsoft Teams Notification
@@ -54,7 +54,7 @@ jobs:
           
   without_optional_params:
       name: One with little info
-      runs-on: ubuntu-18.04
+      runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@master
       - name: Microsoft Teams Notification
@@ -66,7 +66,7 @@ jobs:
   
   with_overwrite:
     name: One with overwrite
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Microsoft Teams Notification
@@ -80,7 +80,7 @@ jobs:
 
   with_raw:
     name: One with raw data
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Microsoft Teams Notification
@@ -99,7 +99,7 @@ jobs:
       
   if_failure:
     name: Only if failure
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Microsoft Teams Notification
