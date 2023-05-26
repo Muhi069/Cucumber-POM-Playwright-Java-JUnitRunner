@@ -47,6 +47,8 @@ Feature: Registration feature
 
 
 
+
+
   Scenario: Unable to register with Confirm Password field empty
     Given User fills First name field "Mutasim"
     * User fills Last name field "Hasan"
