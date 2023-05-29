@@ -117,9 +117,9 @@ jobs:
     - name: Generate Reports
       if: always()
       run: |
-          echo "tests=${{ steps.getxml_tests.outputs.info }}" >> $GITHUB_ENV
-          echo "failures=${{ steps.getxml_failures.outputs.info }}" >> $GITHUB_ENV
-          echo "skipped=${{ steps.getxml_skipped.outputs.info }}" >> $GITHUB_ENV
+          "tests=${{ steps.getxml_tests.outputs.info }}" >> $GITHUB_ENV
+          "failures=${{ steps.getxml_failures.outputs.info }}" >> $GITHUB_ENV
+          "skipped=${{ steps.getxml_skipped.outputs.info }}" >> $GITHUB_ENV
           
 #     - name: Print Debug Log
 #       if: always()
@@ -130,9 +130,6 @@ jobs:
 
     - name: Send Test Results to Microsoft Teams
       run: |
-          echo "tests=${{ steps.getxml_tests.outputs.info }}" >> $GITHUB_ENV
-          echo "failures=${{ steps.getxml_failures.outputs.info }}" >> $GITHUB_ENV
-          echo "skipped=${{ steps.getxml_skipped.outputs.info }}" >> $GITHUB_ENV
           
           curl -H "Content-Type: application/json" -d '{
         
