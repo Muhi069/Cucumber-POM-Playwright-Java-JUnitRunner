@@ -69,15 +69,15 @@ jobs:
               "facts": [
                 {
                   "name": "Total",
-                  "value": "${{ env.TOTAL_TEST_CASES }}"
+                  "value": "${{ steps.getxml_total.outputs.info }}"
                 },
                 {
                   "name": "Passed",
-                  "value": "${{ env.PASSED_TEST_CASES }}"
+                  "value": "${{ steps.getxml_passed.outputs.info }}"
                 },
                 {
                   "name": "Failed",
-                  "value": "${{ env.FAILED_TEST_CASES }}"
+                  "value": "${{ steps.getxml_failed.outputs.info }}"
                 }
               ]
             }
@@ -110,7 +110,7 @@ jobs:
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
-          xpath: /@total
+          xpath: '//testng-results/@passed'
 
     - name: Get Passed Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
@@ -118,7 +118,7 @@ jobs:
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
-          xpath: /@passed
+          xpath: '//testng-results/@passed'
 
     - name: Get Failed Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
@@ -126,7 +126,7 @@ jobs:
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
-          xpath: /@failed
+          xpath: '//testng-results/@passed'
 
     - name: Get Skipped Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
@@ -134,7 +134,7 @@ jobs:
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
-          xpath: /@skipped
+          xpath: '//testng-results/@passed'
 
     - name: Generate Reports
       if: always()
