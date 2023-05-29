@@ -13,7 +13,7 @@ on:
   pull_request:
     branches: [ "excel-file-read" ]
 jobs:
-  test:
+  build-and-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +77,25 @@ jobs:
               ]
             }
           ]
-        }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+        }' <https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80>
+  
+  get-test-results:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Parse test results
+        id: parse-test-results
+        run: |
+          # Parse the test results and extract the necessary information
+          total=$(grep -oP 'Tests run: \K\d+' target/surefire-reports/*.txt | awk '{total+=$1}END{print total}')
+          failed=$(grep -oP 'Failures: \K\d+' target/surefire-reports/*.txt | awk '{failed+=$1}END{print failed}')
+          passed=$((total - failed))
+
+          # Set the outputs to be accessed by the main workflow step
+          echo "::set-output name=total::$total"
+          echo "::set-output name=failed::$failed"
+          echo "::set-output name=passed::$passed"    
         
                 
 
