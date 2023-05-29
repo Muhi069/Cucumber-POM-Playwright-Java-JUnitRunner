@@ -142,8 +142,8 @@ jobs:
                   "value": "${{ env.tests }}"
                 },
                 {
-                  "name": "Passed",
-                  "value": "${{ env.PASSED_TEST_CASES }}"
+                  "name": "Skipped",
+                  "value": "${{ env.skipped }}"
                 },
                 {
                   "name": "Failed",
