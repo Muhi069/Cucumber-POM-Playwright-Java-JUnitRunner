@@ -17,10 +17,6 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/upload-artifact@v3
-      with: 
-          name: my-artifact
-          path: /src/test/resources/config/testData/
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
@@ -32,4 +28,135 @@ jobs:
       run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
     - name: Run tests
       run: mvn test
+#         mkdir staging && cp target/*.jar staging
+        
+    - name: Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: myartifact
+        path: report
+        
+      
+    - uses: toko-bifrost/ms-teams-deploy-card@master
+      if: always()
+      with:
+        github-token: ${{ github.token }}
+        webhook-uri: https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
 
+    # notify Microsoft Teams channel with a custom message
+    - uses: aliencube/microsoft-teams-actions@v0.8.0
+      with:
+        webhook_uri: https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+        title: This is a custom message
+        summary: This is a message summary
+        
+  
+      
+#     - name: Send Teams notification
+#       run: |
+#           curl -X POST -H 'Content-Type: application/json' -d '{
+#             "title": "Git Actions Test Report",
+#             "text": "Total test cases: ${{ steps.get-test-results.outputs.total }}\nFailed test cases: ${{ steps.get-test-results.outputs.failed }}\nPassed test cases: ${{ steps.get-test-results.outputs.passed }}"
+#           }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+          
+          
+    
+  
+#   get-test-results:
+#     needs: build-and-test
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Parse test results
+#         id: parse-test-results
+#         run: |
+#           # Parse the test results and extract the necessary information
+#           total=$(grep -oP 'Tests run: \K\d+' target/surefire-reports/*.txt | awk '{total+=$1}END{print total}')
+#           failed=$(grep -oP 'Failures: \K\d+' target/surefire-reports/*.txt | awk '{failed+=$1}END{print failed}')
+#           passed=$((total - failed))
+
+#           # Set the outputs to be accessed by the main workflow step
+#           echo "::set-output name=total::$total"
+#           echo "::set-output name=failed::$failed"
+#           echo "::set-output name=passed::$passed"    
+        
+         
+         
+    - name: Get All Tests
+      uses: mavrosxristoforos/get-xml-info@1.1.1
+      id: getxml_total
+      if: always()
+      with:
+          xml-file: "report/Xml/ExtentXml.xml"
+          xpath: '//testsuite/@tests'
+
+#     - name: Get Passed Tests
+#       uses: mavrosxristoforos/get-xml-info@1.1.1
+#       id: getxml_passed
+#       if: always()
+#       with:
+#           xml-file: "report/Xml/ExtentXml.xml"
+#           xpath: '//testsuite/@passed'
+
+    - name: Get Failed Tests
+      uses: mavrosxristoforos/get-xml-info@1.1.1
+      id: getxml_failed
+      if: always()
+      with:
+          xml-file: "report/Xml/ExtentXml.xml"
+          xpath: '//testsuite/@failures'
+
+    - name: Get Skipped Tests
+      uses: mavrosxristoforos/get-xml-info@1.1.1
+      id: getxml_skipped
+      if: always()
+      with:
+          xml-file: "report/Xml/ExtentXml.xml"
+          xpath: '//testsuite/@skipped'
+
+    - name: Generate Reports
+      if: always()
+      run: |
+          echo "tests=${{ steps.getxml_tests.outputs.info }}" >> $GITHUB_ENV
+          echo "failures=${{ steps.getxml_failures.outputs.info }}" >> $GITHUB_ENV
+          echo "skipped=${{ steps.getxml_skipped.outputs.info }}" >> $GITHUB_ENV
+          
+#     - name: Print Debug Log
+#       if: always()
+#       run: |
+#           echo "Results: failed: ${{ env.failed }}, passed: ${{ env.passed }}"
+#           cat ./debug.log
+
+
+    - name: Send Test Results to Microsoft Teams
+      run: |
+        curl -H "Content-Type: application/json" -d '{
+          "text": "Test Results for Java Maven Project",
+          "sections": [
+            {
+              "activityTitle": "Test Cases",
+              "activitySubtitle": "Execution Report",
+              "facts": [
+                {
+                  "name": "Tests",
+                  "value": "${{ env.tests }}"
+                },
+                {
+                  "name": "Skipped",
+                  "value": "${{ env.skipped }}"
+                },
+                {
+                  "name": "Failures",
+                  "value": "${{ env.failures }}"
+                }
+              ]
+            }
+          ]
+        }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+
+        
+
+
+        
+        
+ 
