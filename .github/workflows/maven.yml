@@ -58,31 +58,31 @@ jobs:
 #             "title": "Git Actions Test Report",
 #             "text": "Total test cases: ${{ steps.get-test-results.outputs.total }}\nFailed test cases: ${{ steps.get-test-results.outputs.failed }}\nPassed test cases: ${{ steps.get-test-results.outputs.passed }}"
 #           }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
-    - name: Send Test Results to Microsoft Teams
-      run: |
-        curl -H "Content-Type: application/json" -d '{
-          "text": "Test Results for Java Maven Project",
-          "sections": [
-            {
-              "activityTitle": "Test Cases",
-              "activitySubtitle": "Execution Report",
-              "facts": [
-                {
-                  "name": "Total",
-                  "value": "${{ steps.getxml_total.outputs.info }}"
-                },
-                {
-                  "name": "Passed",
-                  "value": "${{ steps.getxml_passed.outputs.info }}"
-                },
-                {
-                  "name": "Failed",
-                  "value": "${{ steps.getxml_failed.outputs.info }}"
-                }
-              ]
-            }
-          ]
-        }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+#     - name: Send Test Results to Microsoft Teams
+#       run: |
+#         curl -H "Content-Type: application/json" -d '{
+#           "text": "Test Results for Java Maven Project",
+#           "sections": [
+#             {
+#               "activityTitle": "Test Cases",
+#               "activitySubtitle": "Execution Report",
+#               "facts": [
+#                 {
+#                   "name": "Total",
+#                   "value": "${{ steps.getxml_total.outputs.info }}"
+#                 },
+#                 {
+#                   "name": "Passed",
+#                   "value": "${{ steps.getxml_passed.outputs.info }}"
+#                 },
+#                 {
+#                   "name": "Failed",
+#                   "value": "${{ steps.getxml_failed.outputs.info }}"
+#                 }
+#               ]
+#             }
+#           ]
+#         }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
   
 #   get-test-results:
 #     needs: build-and-test
