@@ -60,31 +60,7 @@ jobs:
 #           }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
           
           
-    - name: Send Test Results to Microsoft Teams
-      run: |
-        curl -H "Content-Type: application/json" -d '{
-          "text": "Test Results for Java Maven Project",
-          "sections": [
-            {
-              "activityTitle": "Test Cases",
-              "activitySubtitle": "Execution Report",
-              "facts": [
-                {
-                  "name": "Total",
-                  "value": "${{ steps.getxml_total.outputs.info }}"
-                },
-                {
-                  "name": "Passed",
-                  "value": "${{ steps.getxml_passed.outputs.info }}"
-                },
-                {
-                  "name": "Failed",
-                  "value": "${{ steps.getxml_failed.outputs.info }}"
-                }
-              ]
-            }
-          ]
-        }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
+    
   
 #   get-test-results:
 #     needs: build-and-test
@@ -114,13 +90,13 @@ jobs:
           xml-file: "report/Xml/ExtentXml.xml"
           xpath: '//testsuite/@tests'
 
-    - name: Get Passed Tests
-      uses: mavrosxristoforos/get-xml-info@1.1.1
-      id: getxml_passed
-      if: always()
-      with:
-          xml-file: "report/Xml/ExtentXml.xml"
-          xpath: '//testsuite/@passed'
+#     - name: Get Passed Tests
+#       uses: mavrosxristoforos/get-xml-info@1.1.1
+#       id: getxml_passed
+#       if: always()
+#       with:
+#           xml-file: "report/Xml/ExtentXml.xml"
+#           xpath: '//testsuite/@passed'
 
     - name: Get Failed Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
@@ -141,9 +117,8 @@ jobs:
     - name: Generate Reports
       if: always()
       run: |
-          echo "total=${{ steps.getxml_total.outputs.info }}" >> $GITHUB_ENV
-          echo "passed=${{ steps.getxml_passed.outputs.info }}" >> $GITHUB_ENV
-          echo "failed=${{ steps.getxml_failed.outputs.info }}" >> $GITHUB_ENV
+          echo "tests=${{ steps.getxml_tests.outputs.info }}" >> $GITHUB_ENV
+          echo "failures=${{ steps.getxml_failures.outputs.info }}" >> $GITHUB_ENV
           echo "skipped=${{ steps.getxml_skipped.outputs.info }}" >> $GITHUB_ENV
           
 #     - name: Print Debug Log
@@ -151,6 +126,33 @@ jobs:
 #       run: |
 #           echo "Results: failed: ${{ env.failed }}, passed: ${{ env.passed }}"
 #           cat ./debug.log
+
+
+#     - name: Send Test Results to Microsoft Teams
+#       run: |
+#         curl -H "Content-Type: application/json" -d '{
+#           "text": "Test Results for Java Maven Project",
+#           "sections": [
+#             {
+#               "activityTitle": "Test Cases",
+#               "activitySubtitle": "Execution Report",
+#               "facts": [
+#                 {
+#                   "name": "Total",
+#                   "value": "${{ steps.getxml_total.outputs.info }}"
+#                 },
+#                 {
+#                   "name": "Passed",
+#                   "value": "${{ steps.getxml_passed.outputs.info }}"
+#                 },
+#                 {
+#                   "name": "Failed",
+#                   "value": "${{ steps.getxml_failed.outputs.info }}"
+#                 }
+#               ]
+#             }
+#           ]
+#         }' https://brainstationo365.webhook.office.com/webhookb2/5da6a034-20bb-4757-bf3a-cf242d11b1f6@a1e21495-2087-4312-a718-7f84ad109439/IncomingWebhook/d50f0a0c0e754e97ae005fabf070c4bd/919ef122-8dd3-460b-a808-8bb36acc9c80
 
 
         
