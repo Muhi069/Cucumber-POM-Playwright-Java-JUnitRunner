@@ -84,7 +84,7 @@ jobs:
          
     - name: Get All Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
-      id: getxml_total
+      id: getxml_tests
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
@@ -100,7 +100,7 @@ jobs:
 
     - name: Get Failed Tests
       uses: mavrosxristoforos/get-xml-info@1.1.1
-      id: getxml_failed
+      id: getxml_failures
       if: always()
       with:
           xml-file: "report/Xml/ExtentXml.xml"
